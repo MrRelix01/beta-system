@@ -150,6 +150,7 @@ async def fetch_chapters(session: aiohttp.ClientSession, book_id: str) -> list[C
     # 1) JSON endpoint. It needs the _csrfToken cookie that the book page sets.
     try:
         async with session.get(f"{BASE}/book/{book_id}", headers=HEADERS) as resp:
+            book_status = resp.status
             await resp.read()
         token = None
         for cookie in session.cookie_jar:
@@ -169,7 +170,7 @@ async def fetch_chapters(session: aiohttp.ClientSession, book_id: str) -> list[C
                 else:
                     errors.append(f"JSON endpoint HTTP {resp.status}")
         else:
-            errors.append("no _csrfToken cookie")
+            errors.append(f"no _csrfToken cookie (book page HTTP {book_status})")
     except (aiohttp.ClientError, ValueError) as exc:
         errors.append(f"JSON endpoint error: {exc!r}")
 
@@ -177,7 +178,8 @@ async def fetch_chapters(session: aiohttp.ClientSession, book_id: str) -> list[C
     try:
         async with session.get(f"{BASE}/book/{book_id}/catalog", headers=HEADERS) as resp:
             if resp.status != 200:
-                errors.append(f"catalog HTTP {resp.status}")
+                body = (await resp.text())[:200].replace("\n", " ")
+                errors.append(f"catalog HTTP {resp.status} ({body})")
             else:
                 chapters = parse_catalog_html(await resp.text(), book_id)
                 if chapters:

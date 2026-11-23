@@ -126,6 +126,7 @@ async def main() -> int:
             chapters = await fetch_chapters(session, book_id)
         except FetchError as exc:
             state["failures"] = state.get("failures", 0) + 1
+            state["last_error"] = f"{datetime.now(timezone.utc):%Y-%m-%d %H:%M} UTC: {exc}"[:1500]
             print(f"Fetch failed ({state['failures']} in a row): {exc}")
             if state["failures"] in (3, 12, 48, 192):
                 await notify_mods(session, f"{voice.fetch_failure_line(state['failures'])}\n`{exc}`")
@@ -135,6 +136,7 @@ async def main() -> int:
         if state.get("failures", 0) >= 3:
             await notify_mods(session, "Connection restored. I'd like to say I fixed it. I didn't.")
         state["failures"] = 0
+        state.pop("last_error", None)
 
         seen = set(state["seen_ids"])
         if not seen:
