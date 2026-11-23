@@ -1,6 +1,7 @@
 {
-  "failures": 1,
+  "failures": 2,
   "keepalive": null,
+  "last_error": "2026-11-23 23:59 UTC: no _csrfToken cookie (book page HTTP 403); catalog HTTP 403 (<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta nam)",
   "latest": null,
   "seen_ids": []
 }
