@@ -1,8 +1,8 @@
-# Beta System chapter announcer
+# Beta System
 
-> **How to announce a chapter:** open **Actions → Announce a chapter → Run workflow**, paste the chapter title and its WebNovel link, and click **Run workflow**. Within about a minute, "Beta System" posts it in #beta-updates, pings @Beta System Reader, and adds one of its sarcastic lines. You can also type your own System line in the optional box. This works from the GitHub mobile app too.
+> **Use the `/announce` bot in [`discord-bot/`](discord-bot/README.md).** It's a custom Discord bot. You type `/announce title: Chapter 12: …` in Discord and it posts the chapter to #beta-updates in the System's voice. It runs free on Cloudflare, so nothing runs on your PC.
 >
-> **Why it isn't automatic:** WebNovel's bot protection (Cloudflare) blocks GitHub's servers, so the 15-minute auto-check is turned off. The code for it is still here (`notifier.py`) in case that changes.
+> The rest of this repo is the older GitHub Actions version. Automatic checking is paused because WebNovel's bot protection blocks GitHub's servers, but the "Announce a chapter" workflow still works as a backup.
 
 ---
 
