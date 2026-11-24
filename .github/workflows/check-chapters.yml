@@ -1,9 +1,11 @@
 name: Check for new chapters
 
+# Automatic checking is OFF: WebNovel's bot protection blocks GitHub's servers.
+# To turn it back on (e.g. if that changes), restore these two lines under "on:":
+#   schedule:
+#     - cron: "*/15 * * * *"
 on:
-  schedule:
-    - cron: "*/15 * * * *"   # every 15 minutes (GitHub may run it a few minutes late)
-  workflow_dispatch:          # adds a "Run workflow" button for manual checks
+  workflow_dispatch:          # manual test only
 
 permissions:
   contents: write             # lets the job save state.json back to the repo
@@ -17,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip

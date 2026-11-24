@@ -1,0 +1,44 @@
+name: Announce a chapter
+
+on:
+  workflow_dispatch:
+    inputs:
+      chapter_title:
+        description: "Chapter title (e.g. Chapter 12: Gate Break)"
+        required: true
+        type: string
+      chapter_link:
+        description: "Link to the chapter on WebNovel"
+        required: true
+        type: string
+      system_line:
+        description: "Optional: a custom line from the System (leave blank for a random one)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Post the announcement
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          READER_ROLE_ID: ${{ secrets.READER_ROLE_ID }}
+          BOT_AVATAR_URL: ${{ secrets.BOT_AVATAR_URL }}
+          CHAPTER_TITLE: ${{ inputs.chapter_title }}
+          CHAPTER_LINK: ${{ inputs.chapter_link }}
+          SYSTEM_LINE: ${{ inputs.system_line }}
+        run: python announce.py

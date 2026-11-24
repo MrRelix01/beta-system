@@ -1,4 +1,11 @@
-# Beta System chapter notifier (free, runs on GitHub)
+# Beta System chapter announcer
+
+> **How to announce a chapter:** open **Actions → Announce a chapter → Run workflow**, paste the chapter title and its WebNovel link, and click **Run workflow**. Within about a minute, "Beta System" posts it in #beta-updates, pings @Beta System Reader, and adds one of its sarcastic lines. You can also type your own System line in the optional box. This works from the GitHub mobile app too.
+>
+> **Why it isn't automatic:** WebNovel's bot protection (Cloudflare) blocks GitHub's servers, so the 15-minute auto-check is turned off. The code for it is still here (`notifier.py`) in case that changes.
+
+---
+
 
 GitHub runs this for free every 15 minutes, so you don't need a server and your PC can be off. Each run checks WebNovel once. If there's a new chapter, it posts in **#beta-updates** as "Beta System", pings **@Beta System Reader**, and speaks in the System's sarcastic, glitchy voice.
 
